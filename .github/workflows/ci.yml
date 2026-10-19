@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-author:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for TODO-AUTHOR
+        run: |
+          if grep -q "TODO-AUTHOR" README.md; then
+            echo "Napaka: README.md še vedno vsebuje TODO-AUTHOR!"
+            exit 1
+          else
+            echo "README.md ne vsebuje več TODO-AUTHOR. Preverjanje uspešno!"
+          fi
